@@ -1,0 +1,39 @@
+import pandas as pd
+from sklearn.datasets import load_wine
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+# Load the Wine dataset
+wine = load_wine()
+
+# Create a DataFrame
+df = pd.DataFrame(wine.data, columns=wine.feature_names)
+df['target'] = wine.target
+
+# Display the first 5 rows
+print("First 5 rows:\n")
+print(df.head())
+
+# Define features and target
+X = df.drop('target', axis=1)
+y = df['target']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train the Decision Tree classifier
+dt = DecisionTreeClassifier(random_state=42)
+dt.fit(X_train, y_train)
+
+# Make predictions
+y_pred = dt.predict(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+
+print("\nModel Accuracy:", accuracy)
+print("\nTree Depth:", dt.get_depth())
+print("Number of Nodes:", dt.tree_.node_count)
