@@ -1,0 +1,19 @@
+import pandas as pd
+import seaborn as sns
+
+df = sns.load_dataset("titanic")
+print("First 5 Rows of Dataset:\n")
+print(df.head())
+
+print("\nMissing Values Before Handling:\n")
+print(df.isnull().sum())
+
+df['age'] = df['age'].fillna(df['age'].mean())
+df['fare'] = df['fare'].fillna(df['fare'].median())
+df.drop(columns=['deck'], inplace=True)
+
+print("\nMissing Values After Handling:\n")
+print(df.isnull().sum())
+
+print("\nBasic Statistics After Cleaning:\n")
+print(df.describe())
