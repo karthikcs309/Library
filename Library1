@@ -1,0 +1,13 @@
+import pandas as pd
+from sklearn.datasets import load_iris
+iris = load_iris()
+
+df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+
+print("First 5 rows of dataset:")
+print(df.head())
+
+print("\nBasic Statistics:")
+print("Mean:\n", df.mean())
+print("\nMinimum:\n", df.min())
+print("\nMaximum:\n", df.max())
