@@ -1,0 +1,55 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+
+# URL of the Wine dataset
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
+
+# Column names
+columns = [
+    "Class", "Alcohol", "Malic_acid", "Ash", "Alcalinity_of_ash",
+    "Magnesium", "Total_phenols", "Flavanoids",
+    "Nonflavanoid_phenols", "Proanthocyanins",
+    "Color_intensity", "Hue", "OD280_OD315", "Proline"
+]
+
+# Load the dataset
+df = pd.read_csv(url, header=None, names=columns)
+
+# Display the first 5 rows
+print("First 5 rows of dataset:\n")
+print(df.head())
+
+# Compute the absolute correlation matrix
+corr_matrix = df.corr().abs()
+
+# Set correlation threshold
+threshold = 0.5
+
+# Correlation of features with target variable (Class)
+target_corr = corr_matrix["Class"].drop("Class")
+
+# Select features with correlation above threshold
+selected_features = target_corr[target_corr > threshold].index.tolist()
+
+print("\nCorrelation with target (abs):\n")
+print(target_corr.sort_values(ascending=False))
+
+print("\nSelected features (|corr| > 0.5):")
+print(selected_features)
+
+# Define feature matrix and target vector
+X = df[selected_features]
+y = df["Class"]
+
+print("\nFinal selected feature set shape:", X.shape)
+
+# Standardize the selected features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Convert scaled data back to DataFrame
+X_scaled_df = pd.DataFrame(X_scaled, columns=selected_features)
+
+print("\nStandardized features – first 5 rows:")
+print(X_scaled_df.head())
