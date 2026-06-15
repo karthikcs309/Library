@@ -1,0 +1,34 @@
+import sys
+
+# 1. Upgrade pip
+!{sys.executable} -m pip install --break-system-packages --upgrade pip
+
+# 2. Install all required libraries (including openpyxl for Excel files)
+!{sys.executable} -m pip install --break-system-packages \
+numpy pandas matplotlib seaborn scikit-learn jupyter ipykernel openpyxl
+
+import sys
+
+!{sys.executable} -m pip install --break-system-packages --upgrade --force-reinstall matplotlib ipython matplotlib-inline
+
+import sys
+
+!{sys.executable} -m pip install --break-system-packages --force-reinstall \
+matplotlib matplotlib-inline ipython
+
+import sys
+
+!{sys.executable} -m pip install --break-system-packages --force-reinstall \
+"numpy<2"
+
+# 3. Verify installation
+import numpy
+import pandas
+import matplotlib
+import seaborn
+import sklearn
+
+print("All libraries installed successfully!")
+
+
+
